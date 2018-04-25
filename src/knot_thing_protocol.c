@@ -9,6 +9,7 @@
 
 /* Flag to enable debug logs via Serial */
 #define KNOT_DEBUG_ENABLED 0
+#define KNOT_INTERFERENCE 0
 
 #include <stdint.h>
 
@@ -69,8 +70,13 @@
 /* Retransmission timeout in ms */
 #define RETRANSMISSION_TIMEOUT				20000
 
+#if (KNOT_INTERFERENCE == 0)
+#define CHANNEL 76
+#else
+#define CHANNEL 86
+#endif
 static knot_msg msg;
-static struct nrf24_config config = { .mac = 0, .channel = 76 , .name = NULL};
+static struct nrf24_config config = { .mac = 0, .channel = CHANNEL , .name = NULL};
 static unsigned long clear_time;
 static uint32_t last_timeout;
 static int sock = -1;
